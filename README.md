@@ -1,29 +1,25 @@
 # Performing quasinormal fits to ringdown portion of gravitational waveforms
 
 Final project for Computational Physics (PHY 381C Fall 2022)
+
 Author: Hector Iglesias
 
 ##  Introduction
-
-
-gravitational waves: inspiral, merger, ringdown
-
+Gravitational waves are produced by a number of candidate sources, most notably the coalescence of a binary of black holes. The gravitational wave signal from such sources can be split into three pieces: inspiral, merger, and ringdown. The inspiral portion of the waveform corresponds to the waves emitted by the orbiting black holes. The signal is essentially sinusoidal, and the orbits of the system is well described by Newtonian dynamics. In the merger phase, the black holes are so close together that relativistic effects become important in describing the dynamics of the system. At this point, the frequency and amplitude of the waveform increase drastically, hence the <i>chirp</i> in the signal. After the two black holes have merged, a final distorted black hole is left in the aftermath. The ringdown phase of the waveform originates from this final black hole, whose distortions are dissipated away in the form of gravitational waves. The waveform in this phase resembles the ringing of a bell as the black hole is relaxing and settling down to its final state, hence the name ringdown.
 
 In the ringdown regime, the resulting black hole is a single perturbed black hole characterized by two parameters: the final remnant mass $M$ and dimensionless spin $j$. This perturbed black hole radiates gravitational waves at a specific set of frequencies and timescales described by black hole perturbation theory. The set of frequencies and decay times are known as quasinormal modes (QNMs). These modes are modeled as exponentially damped sinusoids [1].
 
-write model of modes (slide 5)
-include real and imaginary frequencies (slide 5)
-Black Hole Perturbation Theory
+Black hole perturbation theory shows that the QNMs can be decomposed into spin-weighted spheroidal harmonics, which can be written as an expansion in spin-weighted spherical harmonics, with angular numbers $(\ell, m)$ and overtone number $n$, with $n=0$ being referred to as the fundamental mode. In the ringdown regime, the gravitational wave $\Psi_4$ is represented by a superpostion of QNMS:
 
 $$
 \Psi_{4_{(\ell',m')}} = \sum_{\ell m} \sum_{n=0} C_{\ell m n} e^{-t/\tau_{\ell m n}} e^{i (\omega_{\ell m n} t + \phi_{\ell m n})}
 $$
 
-$\omega_{\ell m n} = Re(\omega)$, $\tau_{\ell m n} = Im (\omega)^{-1}$
+where $\ell',m'$ are angular mode numbers for the gravitational wave.
 
+Each mode has a complex frequency $\omega$, whose real part is the oscillation frequency $\omega_{\ell m n} = Re(\omega)$, and whose imaginary part is the inverse of the decay time $\tau_{\ell m n} = Im (\omega)^{-1}$. These values are uniquely determined by the mass $M$ and dimensionless spin $j$ of the final black hole. 
 
-
-Quasinormal mode fits (berti paper) (slide 6, 7); Fitting functions of quasinormal mode frequencies
+In the paper <i>On gravitational-wave spectroscopy of massive black holes with the space interferometer LISA</i> [2], the real and imaginary parts of the complex QNM frequencies for different values of $j$ are tabluated in Appendix E. These numerical values have been fitted to reasonable accuracy to simple functions that can be inverted to to determine $M$ and $j$ once the QNM frequencies are known. The fitting functions have the form
 
 $$
 F_{\ell m n} = M \omega_{\ell m n} = f_1 + f_2 (1-j)^{f_3}
@@ -33,25 +29,31 @@ $$
 Q_{\ell m n} = \pi f_{\ell m n} \tau_{\ell m n} = q_1 + q_2 (1-j)^{q_3}
 $$
 
+where $f_i,q_i$ for $i=1,2,3$ are fitting coefficients tabulated in Appendix E and $f_{\ell m n} = \frac{\omega{\ell m n}}{2 \pi}$.
 
-Linear fits in ringdown regime
-$$
-\Psi_{4_{(2,2)}} = A_{220} e^{i \theta_{220}} \approx C_{220} e^{-t/\tau_{220}} e^{i (\omega_{220} t + \phi_{220})}
-$$
+Throughout this work, we will only focus on a single QNM. The motivation for this is that it would allow us to perform linear fits on the (log) amplitude and phase of the waveform in the ringdown regime. To see this, let us use the $\ell=2,m=2,n=0$ QNM as an example. The gravitational waveform in the ringdown regime will then take the approximant form
 
 $$
-\text{ln} A_{220} = \text{ln} C_{220} - \frac{1}{\tau_{220}} t
+\Psi_{4_{(2,2)}} = A_{22} e^{i \theta_{22}} \approx C_{220} e^{-t/\tau_{220}} e^{i (\omega_{220} t + \phi_{220})}
 $$
 
+where $A_{22}$ is the amplitude and $\theta_{22}$ is the gravitational wave phase. Using the Mayawaves library, we can focus on the amplitude and phase of the gravitational waveform separately. Then, we can perform linear fits on the log amplitude of the waveform
+
 $$
-\theta_{220} = \omega_{220} t + \phi_{220}
+\text{ln} A_{22} = \text{ln} C_{220} - \frac{1}{\tau_{220}} t
 $$
 
-[2]
+as well as its phase
+
+$$
+\theta_{22} = \omega_{220} t + \phi_{220}
+$$
+
+From these linear fits, we can determine the real and imaginary parts of the complex QNM frequency, and after inserting these into the fitting functions described above, we can recover the final black hole's mass and dimensionless spin. 
 
 
 ## Setup
-Mayawaves is a python library developed by Deborah Ferguson that allows us to interact with data (outputted,created,..) from the MAYA version of Einstein Toolkit. Einstein Toolkit is an open-source software platform of computational tools that is used in gravitational physics research, primarily for simulating mergers of compact objects such as black holes. MAYA is a particular version of the code developed by Dr. Deirdre Shoemaker's group at UT Austin. The Mayawaves library is very useful to visualize the gravitational waveforms created from these MAYA simulations.
+Mayawaves is a python library developed by Deborah Ferguson that allows us to interact with data produced from the MAYA version of Einstein Toolkit. Einstein Toolkit is an open-source software platform of computational tools that is used in gravitational physics research, primarily for simulating mergers of compact objects such as black holes. MAYA is a particular version of the code developed by Dr. Deirdre Shoemaker's group at UT Austin. The Mayawaves library is very useful to visualize the gravitational waveforms created from these MAYA simulations.
 
 At this point in time, Mayawaves has not been released to the public, so I cannot provide information on setting up the mayawaves environment.However, the library is expected to be released to the public soon, and once this happens, this page will be updated with information on setting up the library as well as a link to the library's documentation.
 
@@ -82,7 +84,7 @@ Lastly, the ringdown portion of the waveform is reconstructed using the amplitud
 
 ![](resources/reconstructed_qnm_fit.png)
 
-## Reference Documentation
+## References
 
 * [1] Giesler, M., Isi, M., Scheel, M. A., and Teukolsky, S. A., “Black Hole Ringdown: The Importance of Overtones”, <i>Physical Review X</i>, vol. 9, no. 4, 2019. doi:10.1103/PhysRevX.9.041060.
 * [2] Berti, E., Cardoso, V., and Will, C. M., “Gravitational-wave spectroscopy of massive black holes with the space interferometer LISA”, <i>Physical Review D</i>, vol. 73, no. 6, 2006. doi:10.1103/PhysRevD.73.064030.
