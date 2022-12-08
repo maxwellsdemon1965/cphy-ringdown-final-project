@@ -15,9 +15,7 @@ $$
 \Psi_{4_{(\ell',m')}} = \sum_{\ell m} \sum_{n=0} C_{\ell m n} e^{-t/\tau_{\ell m n}} e^{i (\omega_{\ell m n} t + \phi_{\ell m n})}
 $$
 
-where $\ell',m'$ are angular mode numbers for the gravitational wave.
-
-Each mode has a complex frequency $\omega$, whose real part is the oscillation frequency $\omega_{\ell m n} = Re(\omega)$, and whose imaginary part is the inverse of the decay time $\tau_{\ell m n} = Im (\omega)^{-1}$. These values are uniquely determined by the mass $M$ and dimensionless spin $j$ of the final black hole. 
+where $\ell',m'$ are angular mode numbers for the gravitational wave. Each mode has a complex frequency $\omega$, whose real part is the oscillation frequency $\omega_{\ell m n} = Re(\omega)$, and whose imaginary part is the inverse of the decay time $\tau_{\ell m n} = Im (\omega)^{-1}$. These values are uniquely determined by the mass $M$ and dimensionless spin $j$ of the final black hole. 
 
 In the paper <i>On gravitational-wave spectroscopy of massive black holes with the space interferometer LISA</i> [2], the real and imaginary parts of the complex QNM frequencies for different values of $j$ are tabluated in Appendix E. These numerical values have been fitted to reasonable accuracy to simple functions that can be inverted to to determine $M$ and $j$ once the QNM frequencies are known. The fitting functions have the form
 
